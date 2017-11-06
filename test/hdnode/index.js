@@ -209,7 +209,7 @@ describe('HDNode', function () {
       it(`returns the identifier for ${f.fingerprint}`, function () {
         const hd = HDNode.fromBase58(f.base58, NETWORKS_LIST)
 
-        assert.strictEqual(hd.getIdentifier().toString('hex'), f.identifier)
+        assert.strictEqual(hd.identifier.toString('hex'), f.identifier)
       })
     })
   })
@@ -255,7 +255,7 @@ describe('HDNode', function () {
       }
 
       assert.strictEqual(hd.getFingerprint().toString('hex'), v.fingerprint)
-      assert.strictEqual(hd.getIdentifier().toString('hex'), v.identifier)
+      assert.strictEqual(hd.identifier.toString('hex'), v.identifier)
       assert.strictEqual(hd.address, v.address)
       assert.strictEqual(hd.keyPair.toWIF(), v.wif)
       assert.strictEqual(hd.keyPair.getPublicKeyBuffer().toString('hex'), v.pubKey)
