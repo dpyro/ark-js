@@ -228,7 +228,7 @@ describe('HDNode', function () {
     validAll.forEach(function (f) {
       it(`drops the private key for ${f.fingerprint}`, function () {
         const hd = HDNode.fromBase58(f.base58Priv, NETWORKS_LIST)
-        const hdn = hd.neutered()
+        const hdn = hd.neutered
 
         assert.notEqual(hdn.keyPair, hd.keyPair)
         assert.throws(function () { hdn.keyPair.toWIF() }, /Missing private key/)
@@ -250,7 +250,7 @@ describe('HDNode', function () {
       if (hd.isNeutered) {
         assert.strictEqual(hd.toBase58(), v.base58)
       } else {
-        assert.strictEqual(hd.neutered().toBase58(), v.base58)
+        assert.strictEqual(hd.neutered.toBase58(), v.base58)
         assert.strictEqual(hd.toBase58(), v.base58Priv)
       }
 
@@ -318,7 +318,7 @@ describe('HDNode', function () {
       const c = f.children[0]
 
       const master = HDNode.fromBase58(f.master.base58Priv, NETWORKS_LIST)
-      const child = master.derive(c.m).neutered()
+      const child = master.derive(c.m).neutered
 
       assert.strictEqual(child.toBase58(), c.base58)
     })
@@ -328,7 +328,7 @@ describe('HDNode', function () {
       const c = f.children[0]
 
       const master = HDNode.fromBase58(f.master.base58Priv, NETWORKS_LIST)
-      const child = master.deriveHardened(c.m).neutered()
+      const child = master.deriveHardened(c.m).neutered
 
       assert.strictEqual(c.base58, child.toBase58())
     })

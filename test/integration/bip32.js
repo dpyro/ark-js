@@ -83,7 +83,7 @@ describe('ark-js (BIP32)', function () {
     const child = master.derive(6) // m/6
 
     // now for the recovery
-    const neuteredMaster = master.neutered()
+    const neuteredMaster = master.neutered
     const recovered = recoverParent(neuteredMaster, child)
     assert.strictEqual(recovered.toBase58(), master.toBase58())
   })
