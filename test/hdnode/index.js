@@ -122,7 +122,7 @@ describe('HDNode', function () {
       hd = new HDNode(keyPair, chainCode)
     })
 
-    describe('getAddress', function () {
+    describe('address', function () {
       it('wraps keyPair.getAddress', sinonTest(function () {
         this.mock(keyPair).expects('getAddress')
           .once().withArgs().returns('foobar')
@@ -214,12 +214,12 @@ describe('HDNode', function () {
     })
   })
 
-  describe('getFingerprint', function () {
+  describe('fingerprint', function () {
     validAll.forEach(function (f) {
       it(`returns the fingerprint for ${f.fingerprint}`, function () {
         const hd = HDNode.fromBase58(f.base58, NETWORKS_LIST)
 
-        assert.strictEqual(hd.getFingerprint().toString('hex'), f.fingerprint)
+        assert.strictEqual(hd.fingerprint.toString('hex'), f.fingerprint)
       })
     })
   })
@@ -254,7 +254,7 @@ describe('HDNode', function () {
         assert.strictEqual(hd.toBase58(), v.base58Priv)
       }
 
-      assert.strictEqual(hd.getFingerprint().toString('hex'), v.fingerprint)
+      assert.strictEqual(hd.fingerprint.toString('hex'), v.fingerprint)
       assert.strictEqual(hd.identifier.toString('hex'), v.identifier)
       assert.strictEqual(hd.address, v.address)
       assert.strictEqual(hd.keyPair.toWIF(), v.wif)
