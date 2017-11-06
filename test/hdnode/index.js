@@ -136,7 +136,7 @@ describe('HDNode', function () {
         this.mock(keyPair).expects('getNetwork')
           .once().withArgs().returns('network')
 
-        assert.strictEqual(hd.getNetwork(), 'network')
+        assert.strictEqual(hd.network, 'network')
       }))
     })
 
