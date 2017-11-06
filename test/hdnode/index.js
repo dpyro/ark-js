@@ -127,7 +127,7 @@ describe('HDNode', function () {
         this.mock(keyPair).expects('getAddress')
           .once().withArgs().returns('foobar')
 
-        assert.strictEqual(hd.getAddress(), 'foobar')
+        assert.strictEqual(hd.address, 'foobar')
       }))
     })
 
@@ -236,18 +236,18 @@ describe('HDNode', function () {
         assert.strictEqual(hdn.chainCode, hd.chainCode)
         assert.strictEqual(hdn.depth, f.depth >>> 0)
         assert.strictEqual(hdn.index, f.index >>> 0)
-        assert.strictEqual(hdn.isNeutered(), true)
+        assert.strictEqual(hdn.isNeutered, true)
 
         // does not modify the original
         assert.strictEqual(hd.toBase58(), f.base58Priv)
-        assert.strictEqual(hd.isNeutered(), false)
+        assert.strictEqual(hd.isNeutered, false)
       })
     })
   })
 
   describe('derive', function () {
     function verifyVector (hd, v) {
-      if (hd.isNeutered()) {
+      if (hd.isNeutered) {
         assert.strictEqual(hd.toBase58(), v.base58)
       } else {
         assert.strictEqual(hd.neutered().toBase58(), v.base58)
@@ -256,7 +256,7 @@ describe('HDNode', function () {
 
       assert.strictEqual(hd.getFingerprint().toString('hex'), v.fingerprint)
       assert.strictEqual(hd.getIdentifier().toString('hex'), v.identifier)
-      assert.strictEqual(hd.getAddress(), v.address)
+      assert.strictEqual(hd.address, v.address)
       assert.strictEqual(hd.keyPair.toWIF(), v.wif)
       assert.strictEqual(hd.keyPair.getPublicKeyBuffer().toString('hex'), v.pubKey)
       assert.strictEqual(hd.chainCode.toString('hex'), v.chainCode)
