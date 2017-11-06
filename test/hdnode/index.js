@@ -179,7 +179,7 @@ describe('HDNode', function () {
       it(`exports ${f.base58} (public) correctly`, function () {
         const hd = HDNode.fromBase58(f.base58, NETWORKS_LIST)
 
-        assert.strictEqual(hd.toBase58(), f.base58)
+        assert.strictEqual(hd.base58, f.base58)
         assert.throws(function () { hd.keyPair.toWIF() }, /Missing private key/)
       })
     })
@@ -188,7 +188,7 @@ describe('HDNode', function () {
       it(`exports ${f.base58Priv} (private) correctly`, function () {
         const hd = HDNode.fromBase58(f.base58Priv, NETWORKS_LIST)
 
-        assert.strictEqual(hd.toBase58(), f.base58Priv)
+        assert.strictEqual(hd.base58, f.base58Priv)
         assert.strictEqual(hd.keyPair.toWIF(), f.wif)
       })
     })
@@ -232,14 +232,14 @@ describe('HDNode', function () {
 
         assert.notEqual(hdn.keyPair, hd.keyPair)
         assert.throws(function () { hdn.keyPair.toWIF() }, /Missing private key/)
-        assert.strictEqual(hdn.toBase58(), f.base58)
+        assert.strictEqual(hdn.base58, f.base58)
         assert.strictEqual(hdn.chainCode, hd.chainCode)
         assert.strictEqual(hdn.depth, f.depth >>> 0)
         assert.strictEqual(hdn.index, f.index >>> 0)
         assert.strictEqual(hdn.isNeutered, true)
 
         // does not modify the original
-        assert.strictEqual(hd.toBase58(), f.base58Priv)
+        assert.strictEqual(hd.base58, f.base58Priv)
         assert.strictEqual(hd.isNeutered, false)
       })
     })
@@ -248,10 +248,10 @@ describe('HDNode', function () {
   describe('derive', function () {
     function verifyVector (hd, v) {
       if (hd.isNeutered) {
-        assert.strictEqual(hd.toBase58(), v.base58)
+        assert.strictEqual(hd.base5, v.base58)
       } else {
-        assert.strictEqual(hd.neutered.toBase58(), v.base58)
-        assert.strictEqual(hd.toBase58(), v.base58Priv)
+        assert.strictEqual(hd.neutered.base58, v.base58)
+        assert.strictEqual(hd.base58, v.base58Priv)
       }
 
       assert.strictEqual(hd.fingerprint.toString('hex'), v.fingerprint)
@@ -320,7 +320,7 @@ describe('HDNode', function () {
       const master = HDNode.fromBase58(f.master.base58Priv, NETWORKS_LIST)
       const child = master.derive(c.m).neutered
 
-      assert.strictEqual(child.toBase58(), c.base58)
+      assert.strictEqual(child.base58, c.base58)
     })
 
     it('works for Private -> public (neutered, hardened)', function () {
@@ -330,7 +330,7 @@ describe('HDNode', function () {
       const master = HDNode.fromBase58(f.master.base58Priv, NETWORKS_LIST)
       const child = master.deriveHardened(c.m).neutered
 
-      assert.strictEqual(c.base58, child.toBase58())
+      assert.strictEqual(c.base58, child.base58)
     })
 
     it('works for Public -> public', function () {
@@ -340,7 +340,7 @@ describe('HDNode', function () {
       const master = HDNode.fromBase58(f.master.base58, NETWORKS_LIST)
       const child = master.derive(c.m)
 
-      assert.strictEqual(c.base58, child.toBase58())
+      assert.strictEqual(c.base58, child.base58)
     })
 
     it('throws on Public -> public (hardened)', function () {
