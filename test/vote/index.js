@@ -62,12 +62,12 @@ describe("vote.js", function () {
       const deserialisedTx = ark.crypto.fromBytes(ark.crypto.getBytes(vt).toString("hex"));
       delete deserialisedTx.vendorFieldHex;
       const keys = Object.keys(deserialisedTx)
-      for(const key in keys){
-        if(keys[key] == "asset"){
+      for (const key of keys) {
+        if (key === "asset") {
           deserialisedTx.asset.votes[0].should.equal(vt.asset.votes[0]);
         }
         else{
-          deserialisedTx[keys[key]].should.equal(vt[keys[key]]);
+          deserialisedTx[key].should.equal(vt[key]);
         }
       }
 

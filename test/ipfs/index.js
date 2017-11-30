@@ -25,9 +25,9 @@ describe("ipfs.js", function () {
     (trs).should.be.ok;
 
     const deserialisedTx = ark.crypto.fromBytes(ark.crypto.getBytes(trs).toString("hex"));
-    const keys = Object.keys(deserialisedTx);
-    for(const key in keys){
-      deserialisedTx[keys[key]].should.equal(trs[keys[key]]);
+    const keys = Object.keys(deserialisedTx)
+    for (const key of keys) {
+      deserialisedTx[key].should.equal(trs[key]);
     }
   });
 

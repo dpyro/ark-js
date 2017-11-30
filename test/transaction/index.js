@@ -126,9 +126,9 @@ describe("transaction.js", function () {
         deserialisedTx.vendorField = new Buffer(deserialisedTx.vendorFieldHex, "hex").toString("utf8")
         delete deserialisedTx.vendorFieldHex;
         const keys = Object.keys(deserialisedTx)
-        for(const key in keys){
-          if(keys[key] != "vendorFieldHex"){
-            deserialisedTx[keys[key]].should.equal(trs[keys[key]]);
+        for (const key of keys) {
+          if (key !== "vendorFieldHex") {
+            deserialisedTx[key].should.equal(trs[key]);
           }
         }
 
@@ -306,8 +306,8 @@ describe("transaction.js", function () {
         const deserialisedTx = ark.crypto.fromBytes(ark.crypto.getBytes(trs).toString("hex"));
         delete deserialisedTx.vendorFieldHex;
         const keys = Object.keys(deserialisedTx)
-        for(const key in keys){
-          deserialisedTx[keys[key]].should.equal(trs[keys[key]]);
+        for (const key of keys) {
+          deserialisedTx[key].should.equal(trs[key]);
         }
 
       });

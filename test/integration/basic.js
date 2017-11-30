@@ -5,7 +5,7 @@ const ark = require('../../')
 describe('ark-js (basic)', function () {
   it('can generate a random ark address', function () {
     // for testing only
-    function rng () { return new Buffer('zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz') }
+    const rng = () => new Buffer('zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz')
 
     // generate random keyPair
     const keyPair = ark.ECPair.makeRandom({ rng })
@@ -26,7 +26,7 @@ describe('ark-js (basic)', function () {
 
   it('can generate a random keypair for alternative networks', function () {
     // for testing only
-    function rng () { return new Buffer('zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz') }
+    const rng = () => new Buffer('zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz')
 
     const bitcoin = ark.networks.bitcoin
 

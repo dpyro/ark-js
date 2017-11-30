@@ -58,8 +58,8 @@ describe("multisignature.js", function () {
       const deserialisedTx = ark.crypto.fromBytes(ark.crypto.getBytes(sgn).toString("hex"));
       delete deserialisedTx.vendorFieldHex;
       const keys = Object.keys(deserialisedTx)
-      for(const key in keys){
-        if(keys[key] == "asset"){
+      for (const key of keys) {
+        if (key === "asset") {
           deserialisedTx.asset.multisignature.min.should.equal(sgn.asset.multisignature.min);
           deserialisedTx.asset.multisignature.lifetime.should.equal(sgn.asset.multisignature.lifetime);
           deserialisedTx.asset.multisignature.keysgroup.length.should.equal(sgn.asset.multisignature.keysgroup.length);
@@ -69,7 +69,7 @@ describe("multisignature.js", function () {
           deserialisedTx.asset.multisignature.keysgroup[2].should.equal(sgn.asset.multisignature.keysgroup[2]);
         }
         else {
-          deserialisedTx[keys[key]].should.equal(sgn[keys[key]]);
+          deserialisedTx[key].should.equal(sgn[key]);
         }
       }
     });

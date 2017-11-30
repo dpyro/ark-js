@@ -45,12 +45,12 @@ describe("signature.js", function () {
       const deserialisedTx = ark.crypto.fromBytes(ark.crypto.getBytes(sgn).toString("hex"));
       delete deserialisedTx.vendorFieldHex;
       const keys = Object.keys(deserialisedTx)
-      for(const key in keys){
-        if(keys[key] == "asset"){
+      for (const key of keys) {
+        if (key === "asset") {
           deserialisedTx.asset.signature.publicKey.should.equal(sgn.asset.signature.publicKey);
         }
         else {
-          deserialisedTx[keys[key]].should.equal(sgn[keys[key]]);
+          deserialisedTx[key].should.equal(sgn[key]);
         }
       }
     });
