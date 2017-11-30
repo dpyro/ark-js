@@ -26,7 +26,7 @@ describe("crypto.js", function () {
       "getBytes", "getHash", "getId", "getFee", "sign", "secondSign",
       "getKeys", "getAddress", "verify", "verifySecondSignature", "fixedPoint"
     ];
-    properties.forEach(function (property) {
+    properties.forEach(property => {
       (crypto).should.have.property(property);
     });
   });
@@ -413,7 +413,7 @@ describe("delegate.js", function () {
       });
 
       it("should have senderPublicKey in hex", function () {
-        (trs).should.have.property("senderPublicKey").and.type("string").and.match(function () {
+        (trs).should.have.property("senderPublicKey").and.type("string").and.match(() => {
           try {
             new Buffer(trs.senderPublicKey, "hex");
           } catch (e) {
@@ -425,7 +425,7 @@ describe("delegate.js", function () {
       });
 
       it("should have signature in hex", function () {
-        (trs).should.have.property("signature").and.type("string").and.match(function () {
+        (trs).should.have.property("signature").and.type("string").and.match(() => {
           try {
             new Buffer(trs.signature, "hex");
           } catch (e) {
@@ -437,7 +437,7 @@ describe("delegate.js", function () {
       });
 
       it("should have second signature in hex", function () {
-        (trs).should.have.property("signSignature").and.type("string").and.match(function () {
+        (trs).should.have.property("signSignature").and.type("string").and.match(() => {
           try {
             new Buffer(trs.signSignature, "hex");
           } catch (e) {

@@ -77,7 +77,7 @@ describe("transaction.js", function () {
       });
 
       it("should have senderPublicKey as hex string", function () {
-        (trs.senderPublicKey).should.be.type("string").and.match(function () {
+        (trs.senderPublicKey).should.be.type("string").and.match(() => {
           try {
             new Buffer(trs.senderPublicKey, "hex")
           } catch (e) {
@@ -105,7 +105,7 @@ describe("transaction.js", function () {
       });
 
       it("should have signature as hex string", function () {
-        (trs.signature).should.be.type("string").and.match(function () {
+        (trs.signature).should.be.type("string").and.match(() => {
           try {
             new Buffer(trs.signature, "hex")
           } catch (e) {
@@ -251,7 +251,7 @@ describe("transaction.js", function () {
       });
 
       it("should have senderPublicKey as hex string", function () {
-        (trs.senderPublicKey).should.be.type("string").and.match(function () {
+        (trs.senderPublicKey).should.be.type("string").and.match(() => {
           try {
             new Buffer(trs.senderPublicKey, "hex")
           } catch (e) {
@@ -279,7 +279,7 @@ describe("transaction.js", function () {
       });
 
       it("should have signature as hex string", function () {
-        (trs.signature).should.be.type("string").and.match(function () {
+        (trs.signature).should.be.type("string").and.match(() => {
           try {
             new Buffer(trs.signature, "hex")
           } catch (e) {
@@ -291,7 +291,7 @@ describe("transaction.js", function () {
       });
 
       it("should have signSignature as hex string", function () {
-        (trs.signSignature).should.be.type("string").and.match(function () {
+        (trs.signSignature).should.be.type("string").and.match(() => {
           try {
             new Buffer(trs.signSignature, "hex");
           } catch (e) {

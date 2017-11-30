@@ -99,7 +99,7 @@ describe("vote.js", function () {
       });
 
       it("should have senderPublicKey hex string equal to sender public key", function () {
-        (vt).should.have.property("senderPublicKey").and.be.type("string").and.match(function () {
+        (vt).should.have.property("senderPublicKey").and.be.type("string").and.match(() => {
           try {
             new Buffer(vt.senderPublicKey, "hex");
           } catch (e) {
@@ -111,7 +111,7 @@ describe("vote.js", function () {
       });
 
       it("should have signature hex string", function () {
-        (vt).should.have.property("signature").and.be.type("string").and.match(function () {
+        (vt).should.have.property("signature").and.be.type("string").and.match(() => {
           try {
             new Buffer(vt.signature, "hex");
           } catch (e) {
@@ -123,7 +123,7 @@ describe("vote.js", function () {
       });
 
       it("should have second signature hex string", function () {
-        (vt).should.have.property("signSignature").and.be.type("string").and.match(function () {
+        (vt).should.have.property("signSignature").and.be.type("string").and.match(() => {
           try {
             new Buffer(vt.signSignature, "hex");
           } catch (e) {
@@ -179,7 +179,7 @@ describe("vote.js", function () {
 
         it("should have public keys in hex", function () {
           vt.asset.votes.forEach(function (v) {
-            (v).should.be.type("string").startWith("+").and.match(function () {
+            (v).should.be.type("string").startWith("+").and.match(() => {
               try {
                 new Buffer(v.substring(1, v.length), "hex");
               } catch (e) {

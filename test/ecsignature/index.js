@@ -7,7 +7,7 @@ const fixtures = require('./fixtures.json')
 
 describe('ECSignature', function () {
   describe('toCompact', function () {
-    fixtures.valid.forEach(function (f) {
+    fixtures.valid.forEach(f => {
       it(`exports ${f.compact.hex} correctly`, function () {
         const signature = new ECSignature(new BigInteger(f.signature.r), new BigInteger(f.signature.s))
 
@@ -18,7 +18,7 @@ describe('ECSignature', function () {
   })
 
   describe('parseCompact', function () {
-    fixtures.valid.forEach(function (f) {
+    fixtures.valid.forEach(f => {
       it(`imports ${f.compact.hex} correctly`, function () {
         const buffer = new Buffer(f.compact.hex, 'hex')
         const parsed = ECSignature.parseCompact(buffer)
@@ -30,19 +30,17 @@ describe('ECSignature', function () {
       })
     })
 
-    fixtures.invalid.compact.forEach(function (f) {
+    fixtures.invalid.compact.forEach(f => {
       it(`throws on ${f.hex}`, function () {
         const buffer = new Buffer(f.hex, 'hex')
 
-        assert.throws(function () {
-          ECSignature.parseCompact(buffer)
-        }, new RegExp(f.exception))
+        assert.throws(() => ECSignature.parseCompact(buffer), new RegExp(f.exception))
       })
     })
   })
 
   describe('toDER', function () {
-    fixtures.valid.forEach(function (f) {
+    fixtures.valid.forEach(f => {
       it(`exports ${f.DER} correctly`, function () {
         const signature = new ECSignature(new BigInteger(f.signature.r), new BigInteger(f.signature.s))
 
@@ -53,7 +51,7 @@ describe('ECSignature', function () {
   })
 
   describe('fromDER', function () {
-    fixtures.valid.forEach(function (f) {
+    fixtures.valid.forEach(f => {
       it(`imports ${f.DER} correctly`, function () {
         const buffer = new Buffer(f.DER, 'hex')
         const signature = ECSignature.fromDER(buffer)
@@ -63,19 +61,17 @@ describe('ECSignature', function () {
       })
     })
 
-    fixtures.invalid.DER.forEach(function (f) {
+    fixtures.invalid.DER.forEach(f => {
       it(`throws "${f.exception}" for ${f.hex}`, function () {
         const buffer = new Buffer(f.hex, 'hex')
 
-        assert.throws(function () {
-          ECSignature.fromDER(buffer)
-        }, new RegExp(f.exception))
+        assert.throws(() => ECSignature.fromDER(buffer), new RegExp(f.exception))
       })
     })
   })
 
   describe('toScriptSignature', function () {
-    fixtures.valid.forEach(function (f) {
+    fixtures.valid.forEach(f => {
       it(`exports ${f.scriptSignature.hex} correctly`, function () {
         const signature = new ECSignature(new BigInteger(f.signature.r), new BigInteger(f.signature.s))
 
@@ -84,19 +80,17 @@ describe('ECSignature', function () {
       })
     })
 
-    fixtures.invalid.scriptSignature.forEach(function (f) {
+    fixtures.invalid.scriptSignature.forEach(f => {
       it(`throws ${f.exception}`, function () {
         const signature = new ECSignature(new BigInteger(f.signature.r), new BigInteger(f.signature.s))
 
-        assert.throws(function () {
-          signature.toScriptSignature(f.hashType)
-        }, new RegExp(f.exception))
+        assert.throws(() => signature.toScriptSignature(f.hashType), new RegExp(f.exception))
       })
     })
   })
 
   describe('parseScriptSignature', function () {
-    fixtures.valid.forEach(function (f) {
+    fixtures.valid.forEach(f => {
       it(`imports ${f.scriptSignature.hex} correctly`, function () {
         const buffer = new Buffer(f.scriptSignature.hex, 'hex')
         const parsed = ECSignature.parseScriptSignature(buffer)
@@ -107,13 +101,11 @@ describe('ECSignature', function () {
       })
     })
 
-    fixtures.invalid.scriptSignature.forEach(function (f) {
+    fixtures.invalid.scriptSignature.forEach(f => {
       it(`throws on ${f.hex}`, function () {
         const buffer = new Buffer(f.hex, 'hex')
 
-        assert.throws(function () {
-          ECSignature.parseScriptSignature(buffer)
-        }, new RegExp(f.exception))
+        assert.throws(() => ECSignature.parseScriptSignature(buffer), new RegExp(f.exception))
       })
     })
   })

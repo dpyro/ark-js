@@ -17,7 +17,7 @@ const NETWORKS = require('../../lib/networks')
 const NETWORKS_LIST = values(NETWORKS)
 
 let validAll = []
-fixtures.valid.forEach(function (f) {
+fixtures.valid.forEach(f => {
   function addNetwork (n) {
     n.network = f.network
     return n
@@ -55,20 +55,16 @@ describe('HDNode', function () {
     it('throws on uncompressed keyPair', function () {
       keyPair.compressed = false
 
-      assert.throws(function () {
-        new HDNode(keyPair, chainCode)
-      }, /BIP32 only allows compressed keyPairs/)
+      assert.throws(() => new HDNode(keyPair, chainCode), /BIP32 only allows compressed keyPairs/)
     })
 
     it('throws when an invalid length chain code is given', function () {
-      assert.throws(function () {
-        new HDNode(keyPair, new Buffer(20))
-      }, /Expected property "1" of type Buffer\(Length: 32\), got Buffer\(Length: 20\)/)
+      assert.throws(() => new HDNode(keyPair, new Buffer(20)), /Expected property "1" of type Buffer\(Length: 32\), got Buffer\(Length: 20\)/)
     })
   })
 
   describe('fromSeed*', function () {
-    fixtures.valid.forEach(function (f) {
+    fixtures.valid.forEach(f => {
       it(`calculates privKey and chainCode for ${f.master.fingerprint}`, function () {
         const network = NETWORKS[f.network]
         const hd = HDNode.fromSeedHex(f.master.seed, network)
@@ -82,30 +78,30 @@ describe('HDNode', function () {
       this.mock(BigInteger).expects('fromBuffer')
         .once().returns(BigInteger.ZERO)
 
-      assert.throws(function () {
-        HDNode.fromSeedHex('ffffffffffffffffffffffffffffffff')
-      }, /Private key must be greater than 0/)
+      assert.throws(
+        () => HDNode.fromSeedHex('ffffffffffffffffffffffffffffffff'),
+        /Private key must be greater than 0/)
     }))
 
     it('throws if IL is not within interval [1, n - 1] | IL === n', sinonTest(function () {
       this.mock(BigInteger).expects('fromBuffer')
         .once().returns(curve.n)
 
-      assert.throws(function () {
-        HDNode.fromSeedHex('ffffffffffffffffffffffffffffffff')
-      }, /Private key must be less than the curve order/)
+      assert.throws(
+        () => HDNode.fromSeedHex('ffffffffffffffffffffffffffffffff'),
+        /Private key must be less than the curve order/)
     }))
 
     it('throws on low entropy seed', function () {
-      assert.throws(function () {
-        HDNode.fromSeedHex('ffffffffff')
-      }, /Seed should be at least 128 bits/)
+      assert.throws(
+        () => HDNode.fromSeedHex('ffffffffff'),
+        /Seed should be at least 128 bits/)
     })
 
     it('throws on too high entropy seed', function () {
-      assert.throws(function () {
-        HDNode.fromSeedHex('ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff')
-      }, /Seed should be at most 512 bits/)
+      assert.throws(() =>
+        HDNode.fromSeedHex('ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'),
+        /Seed should be at most 512 bits/)
     })
   })
 
@@ -193,7 +189,7 @@ describe('HDNode', function () {
 
     fixtures.invalid.fromBase58.forEach(function (f) {
       it(`throws on ${f.string}`, function () {
-        assert.throws(function () {
+        assert.throws(() => {
           const networks = f.network ? NETWORKS[f.network] : NETWORKS_LIST
 
           HDNode.fromBase58(f.string, networks)
@@ -203,7 +199,7 @@ describe('HDNode', function () {
   })
 
   describe('getIdentifier', function () {
-    validAll.forEach(function (f) {
+    validAll.forEach(f => {
       it(`returns the identifier for ${f.fingerprint}`, function () {
         const hd = HDNode.fromBase58(f.base58, NETWORKS_LIST)
 
@@ -213,7 +209,7 @@ describe('HDNode', function () {
   })
 
   describe('getFingerprint', function () {
-    validAll.forEach(function (f) {
+    validAll.forEach(f => {
       it(`returns the fingerprint for ${f.fingerprint}`, function () {
         const hd = HDNode.fromBase58(f.base58, NETWORKS_LIST)
 
@@ -223,13 +219,13 @@ describe('HDNode', function () {
   })
 
   describe('neutered / isNeutered', function () {
-    validAll.forEach(function (f) {
+    validAll.forEach(f => {
       it(`drops the private key for ${f.fingerprint}`, function () {
         const hd = HDNode.fromBase58(f.base58Priv, NETWORKS_LIST)
         const hdn = hd.neutered()
 
         assert.notEqual(hdn.keyPair, hd.keyPair)
-        assert.throws(function () { hdn.keyPair.toWIF() }, /Missing private key/)
+        assert.throws(() => hdn.keyPair.toWIF(), /Missing private key/)
         assert.strictEqual(hdn.toBase58(), f.base58)
         assert.strictEqual(hdn.chainCode, hd.chainCode)
         assert.strictEqual(hdn.depth, f.depth >>> 0)
@@ -262,13 +258,13 @@ describe('HDNode', function () {
       assert.strictEqual(hd.index, v.index >>> 0)
     }
 
-    fixtures.valid.forEach(function (f) {
+    fixtures.valid.forEach(f => {
       const network = NETWORKS[f.network]
       let hd = HDNode.fromSeedHex(f.master.seed, network)
       const master = hd
 
       // testing deriving path from master
-      f.children.forEach(function (c) {
+      f.children.forEach(c => {
         it(`${c.path} from ${f.master.fingerprint} by path`, function () {
           const child = master.derivePath(c.path)
           const childNoM = master.derivePath(c.path.slice(2)) // no m/ on path
@@ -279,24 +275,24 @@ describe('HDNode', function () {
       })
 
       // testing deriving path from children
-      f.children.forEach(function (c, i) {
+      f.children.forEach((c, i) => {
         const cn = master.derivePath(c.path)
 
-        f.children.slice(i + 1).forEach(function (cc) {
+        f.children.slice(i + 1).forEach((cc) => {
           it(`${cc.path} from ${c.fingerprint} by path`, function () {
             const ipath = cc.path.slice(2).split('/').slice(i + 1).join('/')
             const child = cn.derivePath(ipath)
             verifyVector(child, cc)
 
-            assert.throws(function () {
-              cn.derivePath(`m/${ipath}`)
-            }, /Not a master node/)
+            assert.throws(
+              () => cn.derivePath(`m/${ipath}`),
+              /Not a master node/)
           })
         })
       })
 
       // FIXME: test data is only testing Private -> private for now
-      f.children.forEach(function (c) {
+      f.children.forEach(c => {
         if (c.m === undefined) return
 
         it(`${c.path} from ${f.master.fingerprint}`, function () {
@@ -347,31 +343,31 @@ describe('HDNode', function () {
 
       const master = HDNode.fromBase58(f.master.base58, NETWORKS_LIST)
 
-      assert.throws(function () {
-        master.deriveHardened(c.m)
-      }, /Could not derive hardened child key/)
+      assert.throws(
+        () => master.deriveHardened(c.m),
+        /Could not derive hardened child key/)
     })
 
     it('throws on wrong types', function () {
       const f = fixtures.valid[0]
       const master = HDNode.fromBase58(f.master.base58, NETWORKS_LIST)
 
-      fixtures.invalid.derive.forEach(function (fx) {
-        assert.throws(function () {
-          master.derive(fx)
-        }, /Expected UInt32/)
+      fixtures.invalid.derive.forEach(fx => {
+        assert.throws(
+          () => master.derive(fx),
+          /Expected UInt32/)
       })
 
-      fixtures.invalid.deriveHardened.forEach(function (fx) {
-        assert.throws(function () {
-          master.deriveHardened(fx)
-        }, /Expected UInt31/)
+      fixtures.invalid.deriveHardened.forEach(fx => {
+        assert.throws(
+          () => master.deriveHardened(fx),
+          /Expected UInt31/)
       })
 
-      fixtures.invalid.derivePath.forEach(function (fx) {
-        assert.throws(function () {
-          master.derivePath(fx)
-        }, /Expected BIP32 derivation path/)
+      fixtures.invalid.derivePath.forEach(fx => {
+        assert.throws(
+          () => master.derivePath(fx),
+          /Expected BIP32 derivation path/)
       })
     })
 

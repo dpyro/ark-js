@@ -40,7 +40,7 @@ describe('ECPair', function () {
       assert.strictEqual(keyPair.network, NETWORKS.testnet)
     })
 
-    fixtures.valid.forEach(function (f) {
+    fixtures.valid.forEach(f => {
       it(`calculates the public point for ${f.WIF}`, function () {
         const d = new BigInteger(f.d)
         const keyPair = new ECPair(d, null, {
@@ -51,7 +51,7 @@ describe('ECPair', function () {
       })
     })
 
-    fixtures.invalid.constructor.forEach(function (f) {
+    fixtures.invalid.constructor.forEach(f => {
       it(`throws ${f.exception}`, function () {
         const d = f.d && new BigInteger(f.d)
         const Q = f.Q && ecurve.Point.decodeFrom(curve, new Buffer(f.Q, 'hex'))
@@ -79,7 +79,7 @@ describe('ECPair', function () {
   })
 
   describe('fromWIF', function () {
-    fixtures.valid.forEach(function (f) {
+    fixtures.valid.forEach(f => {
       it(`imports ${f.WIF} (${f.network})`, function () {
         const network = NETWORKS[f.network]
         const keyPair = ECPair.fromWIF(f.WIF, network)
@@ -91,7 +91,7 @@ describe('ECPair', function () {
       })
     })
 
-    fixtures.valid.forEach(function (f) {
+    fixtures.valid.forEach(f => {
       it(`imports ${f.WIF} (via list of networks)`, function () {
         const keyPair = ECPair.fromWIF(f.WIF, NETWORKS_LIST)
 
@@ -102,7 +102,7 @@ describe('ECPair', function () {
       })
     })
 
-    fixtures.invalid.fromWIF.forEach(function (f) {
+    fixtures.invalid.fromWIF.forEach(f => {
       it(`throws on ${f.WIF}`, function () {
         assert.throws(function () {
           const networks = f.network ? NETWORKS[f.network] : NETWORKS_LIST
@@ -114,7 +114,7 @@ describe('ECPair', function () {
   })
 
   describe('toWIF', function () {
-    fixtures.valid.forEach(function (f) {
+    fixtures.valid.forEach(f => {
       it(`exports ${f.WIF}`, function () {
         const keyPair = ECPair.fromWIF(f.WIF, NETWORKS_LIST)
         const result = keyPair.toWIF()
@@ -184,7 +184,7 @@ describe('ECPair', function () {
   })
 
   describe('getAddress', function () {
-    fixtures.valid.forEach(function (f) {
+    fixtures.valid.forEach(f => {
       it(`returns ${f.address} for ${f.WIF}`, function () {
         const keyPair = ECPair.fromWIF(f.WIF, NETWORKS_LIST)
 
@@ -194,7 +194,7 @@ describe('ECPair', function () {
   })
 
   describe('getNetwork', function () {
-    fixtures.valid.forEach(function (f) {
+    fixtures.valid.forEach(f => {
       it(`returns ${f.network} for ${f.WIF}`, function () {
         const network = NETWORKS[f.network]
         const keyPair = ECPair.fromWIF(f.WIF, NETWORKS_LIST)
@@ -223,9 +223,7 @@ describe('ECPair', function () {
       it('throws if no private key is found', function () {
         keyPair.d = null
 
-        assert.throws(function () {
-          keyPair.sign(hash)
-        }, /Missing private key/)
+        assert.throws(() => keyPair.sign(hash), /Missing private key/)
       })
     })
 

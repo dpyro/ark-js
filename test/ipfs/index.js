@@ -64,7 +64,7 @@ describe("ipfs.js", function () {
     });
 
     it("should have senderPublicKey as hex string", function () {
-      (trs.senderPublicKey).should.be.type("string").and.match(function () {
+      (trs.senderPublicKey).should.be.type("string").and.match(() => {
         try {
           new Buffer(trs.senderPublicKey, "hex")
         } catch (e) {
@@ -88,7 +88,7 @@ describe("ipfs.js", function () {
     });
 
     it("should have signature as hex string", function () {
-      (trs.signature).should.be.type("string").and.match(function () {
+      (trs.signature).should.be.type("string").and.match(() => {
         try {
           new Buffer(trs.signature, "hex")
         } catch (e) {
