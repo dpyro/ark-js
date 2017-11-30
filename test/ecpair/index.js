@@ -4,6 +4,7 @@ const ecurve = require('ecurve')
 const proxyquire = require('proxyquire')
 const sinon = require('sinon')
 const sinonTest = require('sinon-test')(sinon)
+const values = require('lodash.values')
 
 const BigInteger = require('bigi')
 const ECPair = require('../../lib/ecpair')
@@ -12,10 +13,7 @@ const fixtures = require('./fixtures.json')
 const curve = ecdsa.__curve
 
 const NETWORKS = require('../../lib/networks')
-const NETWORKS_LIST = [] // Object.values(NETWORKS)
-for (const networkName in NETWORKS) {
-  NETWORKS_LIST.push(NETWORKS[networkName])
-}
+const NETWORKS_LIST = values(NETWORKS) // Object.values(NETWORKS)
 
 describe('ECPair', function () {
   describe('constructor', function () {

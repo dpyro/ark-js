@@ -4,6 +4,7 @@ const assert = require('assert')
 const ecdsa = require('../../lib/ecdsa')
 const sinon = require('sinon')
 const sinonTest = require('sinon-test')(sinon)
+const values = require('lodash.values')
 
 const BigInteger = require('bigi')
 const ECPair = require('../../lib/ecpair')
@@ -13,10 +14,7 @@ const fixtures = require('./fixtures.json')
 const curve = ecdsa.__curve
 
 const NETWORKS = require('../../lib/networks')
-const NETWORKS_LIST = [] // Object.values(NETWORKS)
-for (const networkName in NETWORKS) {
-  NETWORKS_LIST.push(NETWORKS[networkName])
-}
+const NETWORKS_LIST = values(NETWORKS)
 
 let validAll = []
 fixtures.valid.forEach(function (f) {
