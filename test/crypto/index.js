@@ -237,7 +237,7 @@ describe("crypto.js", function () {
       (keys).should.be.type("object");
       (keys).should.have.property("publicKey");
       (keys).should.have.property("privateKey");
-      (keys.publicKey).should.be.type("string").and.match(function () {
+      (keys.publicKey).should.be.type("string").and.match(() => {
         try {
           new Buffer(keys.publicKey, "hex");
         } catch (e) {
@@ -246,7 +246,7 @@ describe("crypto.js", function () {
 
         return true;
       });
-      (keys.privateKey).should.be.type("string").and.match(function () {
+      (keys.privateKey).should.be.type("string").and.match(() => {
         try {
           new Buffer(keys.privateKey, "hex");
         } catch (e) {

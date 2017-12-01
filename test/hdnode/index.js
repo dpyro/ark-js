@@ -169,16 +169,16 @@ describe('HDNode', function () {
   })
 
   describe('fromBase58 / toBase58', function () {
-    validAll.forEach(function (f) {
+    validAll.forEach(f => {
       it(`exports ${f.base58} (public) correctly`, function () {
         const hd = HDNode.fromBase58(f.base58, NETWORKS_LIST)
 
         assert.strictEqual(hd.toBase58(), f.base58)
-        assert.throws(function () { hd.keyPair.toWIF() }, /Missing private key/)
+        assert.throws(() => hd.keyPair.toWIF(), /Missing private key/)
       })
     })
 
-    validAll.forEach(function (f) {
+    validAll.forEach(f => {
       it(`exports ${f.base58Priv} (private) correctly`, function () {
         const hd = HDNode.fromBase58(f.base58Priv, NETWORKS_LIST)
 
@@ -187,7 +187,7 @@ describe('HDNode', function () {
       })
     })
 
-    fixtures.invalid.fromBase58.forEach(function (f) {
+    fixtures.invalid.fromBase58.forEach(f => {
       it(`throws on ${f.string}`, function () {
         assert.throws(() => {
           const networks = f.network ? NETWORKS[f.network] : NETWORKS_LIST
@@ -278,7 +278,7 @@ describe('HDNode', function () {
       f.children.forEach((c, i) => {
         const cn = master.derivePath(c.path)
 
-        f.children.slice(i + 1).forEach((cc) => {
+        f.children.slice(i + 1).forEach(cc => {
           it(`${cc.path} from ${c.fingerprint} by path`, function () {
             const ipath = cc.path.slice(2).split('/').slice(i + 1).join('/')
             const child = cn.derivePath(ipath)

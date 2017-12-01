@@ -14,7 +14,7 @@ describe("slots.js", function () {
 
   it("should have properties", function () {
     const properties = ["interval", "delegates", "getTime", "getRealTime", "getSlotNumber", "getSlotTime", "getNextSlot", "getLastSlot"];
-    properties.forEach(function (property) {
+    properties.forEach(property => {
       (slots).should.have.property(property);
     });
   });

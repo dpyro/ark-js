@@ -40,21 +40,14 @@ describe("transaction.js", function () {
     });
 
     it("should fail if transaction with vendorField length > 64", function () {
-      let vf="z";
-      for(let i=0;i<6;i++){
-        vf=vf+vf;
-      }
-      vf=`${vf}z`;
+      const vf = 'z'.repeat(65)
       trs = createTransaction("AJWRd23HNEhPLkK1ymMnwnDBX2a7QBZqff", 1000, vf, "secret");
       return (trs===null).should.equal(true);
 
     });
 
     it("should be ok if transaction with vendorField length = 64", function () {
-      let vf="z";
-      for(let i=0;i<6;i++){
-        vf=vf+vf;
-      }
+      const vf = 'z'.repeat(64)
       trs = createTransaction("AJWRd23HNEhPLkK1ymMnwnDBX2a7QBZqff", 1000, vf, "secret");
       (trs).should.be.ok;
     });

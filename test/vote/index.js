@@ -178,7 +178,7 @@ describe("vote.js", function () {
         });
 
         it("should have public keys in hex", function () {
-          vt.asset.votes.forEach(function (v) {
+          vt.asset.votes.forEach(v => {
             (v).should.be.type("string").startWith("+").and.match(() => {
               try {
                 new Buffer(v.substring(1, v.length), "hex");

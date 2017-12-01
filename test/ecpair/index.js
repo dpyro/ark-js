@@ -56,9 +56,7 @@ describe('ECPair', function () {
         const d = f.d && new BigInteger(f.d)
         const Q = f.Q && ecurve.Point.decodeFrom(curve, new Buffer(f.Q, 'hex'))
 
-        assert.throws(function () {
-          new ECPair(d, Q, f.options)
-        }, new RegExp(f.exception))
+        assert.throws(() => new ECPair(d, Q, f.options), new RegExp(f.exception))
       })
     })
   })
@@ -104,7 +102,7 @@ describe('ECPair', function () {
 
     fixtures.invalid.fromWIF.forEach(f => {
       it(`throws on ${f.WIF}`, function () {
-        assert.throws(function () {
+        assert.throws(() => {
           const networks = f.network ? NETWORKS[f.network] : NETWORKS_LIST
 
           ECPair.fromWIF(f.WIF, networks)
